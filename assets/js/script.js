@@ -3,7 +3,46 @@
 /* Notes:
 - I will contain the javascript files
 */
+function onfetchWeather(){
+    const API_KEY = "f23ee9deb4e1a7450f3157c44ed020e1";
+    // get the name of the city from the form on the main page
+    var cityDef = document.getElementById("city").value;
+    // First, get the latitude and longitude for the city
+    var geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityDef}&limit=1&appid=${API_KEY}`;
 
+    fetch(geoUrl)
+    .then((response) => response.json())
+    .then((data) => {
+        // Set the Latitude info
+        const lat = data[0].lat;
+        // Set the Longitude info
+        const lon = data[0].lon;
+        // Call getWeather API when the button is clicked
+        const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+
+        fetch(weatherUrl)
+        .then((response) => response.json())
+        .then((data) => {
+            const cityName = data.name;
+            const cityCountry = data.sys.country;
+            const cityClouds = data.clouds.all;
+            const citySunrise = data.sys.sunrise;
+            const citySunset = data.sys.sunset;
+            const cityWeather = data.weather.main;
+            const cityWeatherDesc = data.weather.description;
+            const cityWindDeg = data.wind.deg;
+            const cityWindSpeed = data.wind.speed;
+            // DEBUG
+            console.log("data: ", data)
+            //console.log("name: ", cityName);
+            //console.log("county: ", cityCountry);
+        })
+        .catch((error) => console.error("Fetch error:", error));
+    })
+    .catch((error) => console.error("Fetch error:", error));
+}
+
+document.getElementById("getWeather").addEventListener("click", onfetchWeather);
 
 /* This is reference code
 
