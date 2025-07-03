@@ -1,17 +1,36 @@
+:root {
+    --primary-blue: #0077b6;
+    --light-blue: #cceeff;
+    --white: #ffffff;
+    --off-white-transparent: #ffffffcc;
+    --yellow: #ffeb3b;
+    --dark-blue: #007bff;
+    --darker-blue: #0056b3;
+    --darkest-blue: #004b9a;
+    --light-blue-result: #e6f2ff;
+    --medium-blue-hover: #005f8a;
+    --light-gray: #f8f9fa;
+    --border-focus-shadow: rgba(0, 119, 182, 0.5);
+    --date-header-color: #555;
+    --card-border-color: #dee2e6;
+    --text-color-dark: #333;
+    --carousel-control-bg: rgba(0, 0, 0, 0.5);
+}
+
 body {
-    background: linear-gradient(to bottom, #cceeff, #ffffff);
+    background: linear-gradient(to bottom, var(--light-blue), var(--white));
     font-family: 'Segoe UI', sans-serif;
 }
 
 .weather-dashboard {
-    background-color: #ffffffcc;
+    background-color: var(--off-white-transparent);
     border-radius: 15px;
     padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .weather-header {
-    background-color: #ffeb3b;
+    background-color: var(--yellow);
     padding: 1rem;
     border-radius: 10px;
     display: flex;
@@ -27,17 +46,17 @@ body {
 }
 
 #getWeather {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: var(--dark-blue);
+    border-color: var(--dark-blue);
 }
 
 #getWeather:hover {
-    background-color: #0056b3;
-    border-color: #004b9a;
+    background-color: var(--darker-blue);
+    border-color: var(--darkest-blue);
 }
 
 .weather-result {
-    background-color: #e6f2ff;
+    background-color: var(--light-blue-result);
     padding: 1rem;
     border-radius: 10px;
     min-height: 100px;
@@ -49,20 +68,20 @@ img {
 }
 
 h1, h4 {
-    color: #0077b6;
+    color: var(--primary-blue);
 }
 
 .btn-primary {
-    background-color: #0077b6;
+    background-color: var(--primary-blue);
     border: none;
 }
 
 .btn-primary:hover {
-    background-color: #005f8a;
+    background-color: var(--medium-blue-hover);
 }
 
 .bg-light {
-    background-color: #f8f9fa !important;
+    background-color: var(--light-gray) !important;
 }
 
 .list-unstyled li {
@@ -70,12 +89,12 @@ h1, h4 {
 }
 
 textarea:focus, input:focus {
-    box-shadow: 0 0 5px rgba(0, 119, 182, 0.5);
-    border-color: #0077b6;
+    box-shadow: 0 0 5px var(--border-focus-shadow);
+    border-color: var(--primary-blue);
 }
 
 .mt-4 a {
-    color: #0077b6;
+    color: var(--primary-blue);
 }
 
 .mt-4 a:hover {
@@ -93,7 +112,6 @@ textarea:focus, input:focus {
     height: 200px;
 }
 
-
 .weatherCity h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
@@ -102,33 +120,33 @@ textarea:focus, input:focus {
 .date-header {
     font-size: 1.8rem;
     margin-bottom: 20px;
-    color: #555;
+    color: var(--date-header-color);
 }
 
 .weather-hourly-container {
     padding: 15px;
-    background-color: #f8f9fa; /* Light background for the hourly container */
+    background-color: var(--light-gray);
     border-radius: 8px;
-    min-height: 200px; /* Ensure some height even with less data */
+    min-height: 200px;
 }
 
 .weather-hour-card {
-    background-color: #ffffff;
-    border-color: #dee2e6 !important;
+    background-color: var(--white);
+    border-color: var(--card-border-color) !important;
     text-align: center;
-    min-width: 150px; /* Ensures cards don't get too small */
-    flex-grow: 1; /* Allows cards to grow */
-    max-width: 200px; /* Prevents cards from getting too wide in a row */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    min-width: 150px;
+    flex-grow: 1;
+    max-width: 200px;
+    box-sizing: border-box;
 }
 
 .weather-hour-card h3 {
     margin-bottom: 10px;
-    color: #333;
+    color: var(--text-color-dark);
 }
 
 .weather-icon {
-    width: 60px; /* Adjust size as needed */
+    width: 60px;
     height: 60px;
     margin-bottom: 5px;
 }
@@ -136,6 +154,6 @@ textarea:focus, input:focus {
 /* Optional: styling for carousel controls if needed */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--carousel-control-bg);
     border-radius: 50%;
 }
