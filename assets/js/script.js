@@ -43,23 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let dateData = data.list;
             const currentCity = data.city.name;
             for (var i = 0; i < dateData.length; i++){
-
               let currentRecord = dateData[i];
-              let currentWeather = currentRecord.weather[0].main;
-              let currentWeatherDesc = currentRecord.weather[0].description;
-              let currentTemp = currentRecord.main.temp;
-              let currentFeel = currentRecord.main.feels_like;
-              var currentWindDeg = currentRecord.wind.deg;
-              var currentWindSpeed = currentRecord.wind.speed;
-
-              let weatherInfo = {
-                weather : currentWeather,
-                description : currentWeatherDesc,
-                temp : currentTemp,
-                feels : currentFeel,
-                wind : currentWindDeg,
-                windSp : currentWindSpeed
-              }
 
               let currentDate = currentRecord.dt;
               let date = new Date(currentDate * 1000);
@@ -71,6 +55,23 @@ document.addEventListener("DOMContentLoaded", () => {
               let dateFormatted = `${yy}/${mm}/${dd}`;
               let timeFormatted = `${hh}:${min}`;
 
+              
+              let currentWeather = currentRecord.weather[0].main;
+              let currentWeatherDesc = currentRecord.weather[0].description;
+              let currentTemp = currentRecord.main.temp;
+              let currentFeel = currentRecord.main.feels_like;
+              var currentWindDeg = currentRecord.wind.deg;
+              var currentWindSpeed = currentRecord.wind.speed;
+
+              let weatherInfo = {
+                time : timeFormatted,
+                weather : currentWeather,
+                description : currentWeatherDesc,
+                temp : currentTemp,
+                feels : currentFeel,
+                wind : currentWindDeg,
+                windSp : currentWindSpeed
+              }
 
               if (!weatherArray[dateFormatted]){
                 weatherArray[dateFormatted] = []
@@ -78,48 +79,67 @@ document.addEventListener("DOMContentLoaded", () => {
               weatherArray[dateFormatted][timeFormatted] = weatherInfo;
             }
             
-            let count = 1;
-            for (let date in weatherArray) {
-              let innerHTML = `
-                <div class="weatherCity">${currentCity}</div>
-              `;
+            let count = 1; // Set a count so that we know which one is the first element
+
+            for (let date in weatherArray) { // Cycle through the weather array
+
+            // This will create a carousel item for each day
+
               // Create the element
               let newEl = document.createElement("div");
-              if(count == 1){ 
+
+              if(count == 1){ // if this is the first carousel item then make sure it is active
                 newEl.className = "carousel-item active";
-              }else{
+              }else{ // otherwise just set the standard carousel item
                 newEl.className = "carousel-item";
               }
+
+              // create the inner HTML for the carousel, this puts the location at the top of each carousel items
+              let innerHTML = `
+                <div class="weatherCity">${currentCity}</div>
+                <div id="${currentCity}-${count}" class="d-flex no-wrap">
+                </div>
+              `;
+
+              //assign an individual ID for the element - we will be using this to populate each carousel item
+              //newEl.setAttribute("id", `${currentCity}-${count}` );
               
-              // Assign innerHTML correctly
+              // Assign innerHTML to the new element
               newEl.innerHTML = innerHTML;
-              // Append to your container
+
+              // Select the weatherResultInner Div and append the carousel div to the box
               var weatherResultInner = document.getElementById("weatherResultInner");
               weatherResultInner.appendChild(newEl);
 
+              // Set a new variable for the time data array which contains each of the hourly data reports
               let timesObj = weatherArray[date];
 
               for (let time in timesObj) {
                   // Each of the time stamps
                 
                 let weatherData = timesObj[time];
+                
+                // Create a new internal element
+                let newEl = document.createElement("div");
+                // make the hours a flex box
+                newEl.className = "m-3";
 
-                  let innerHTML = `
-                    <div class="d-flex">
-                    
-                      <div id="time">${weatherData}</div>
-                      <div id="weatherDesc"></div>
-                      <div id="weatherTemp"></div>
-                      <div id="weatherFeels"></div>
-                      <div id="weatherWindDeg"></div>
-                      <div id="weatherWindSpeed"></div>
-                      <div id="weatherClouds"></div>
-                      <div id="weatherSunrise"></div>
-                      <div id="weatherSunset"></div>
-                    
-                    </div>
-                  `;
-               
+                // create the inner HTML for the carousel, this puts the location at the top of each carousel items
+                let innerHTML = `
+                  <div id="time">${weatherData.time}</div>
+                  <div id="weather">Weather: ${weatherData.weather}<br />${weatherData.description}</div>
+                  <div id="weatherTemp">Temperature: ${weatherData.temp}</div>
+                  <div id="weatherFeels">Feels Like: ${weatherData.feels}</div>
+                  <div id="weatherWindDeg">Direction: ${weatherData.wind}</div>
+                  <div id="weatherWindSpeed">Speed: ${weatherData.windsp}</div>
+                `;
+
+                // Assign innerHTML to the new element
+                newEl.innerHTML = innerHTML;
+
+                // Select the weatherResultInner Div and append the carousel div to the box
+                var weatherResultInner = document.getElementById(`${currentCity}-${count}`);
+                weatherResultInner.appendChild(newEl);
               }
               count++;
             }
@@ -152,6 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Fetch error:", error));
   }
 
-  document.getElementById("getWeather").addEventListener("click", onfetchWeather());
+  document.getElementById("getWeather").addEventListener("click", onfetchWeather);
 
 });
