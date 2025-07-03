@@ -81,3 +81,9 @@ textarea:focus, input:focus {
 .mt-4 a:hover {
     text-decoration: underline;
 }
+
+.telly-sun {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
+}
