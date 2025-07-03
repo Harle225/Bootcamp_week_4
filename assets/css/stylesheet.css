@@ -87,3 +87,8 @@ textarea:focus, input:focus {
     width: auto;
     margin-right: 10px;
 }
+
+.tubby-img {
+    width: 200px;
+    height: 200px;
+}
