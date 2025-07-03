@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .then((data) => {
 
             let dateData = data.list;
-
+            const currentCity = data.city.name;
             for (var i = 0; i < dateData.length; i++){
 
               let currentRecord = dateData[i];
@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
               var currentWindSpeed = currentRecord.wind.speed;
 
               let weatherInfo = {
-                city : data.city.name,
                 weather : currentWeather,
                 description : currentWeatherDesc,
                 temp : currentTemp,
@@ -79,37 +78,50 @@ document.addEventListener("DOMContentLoaded", () => {
               weatherArray[dateFormatted][timeFormatted] = weatherInfo;
             }
             
+            let count = 1;
             for (let date in weatherArray) {
-              let count = 1
+              let innerHTML = `
+                <div class="weatherCity">${currentCity}</div>
+              `;
+              // Create the element
+              let newEl = document.createElement("div");
+              if(count == 1){ 
+                newEl.className = "carousel-item active";
+              }else{
+                newEl.className = "carousel-item";
+              }
+              
+              // Assign innerHTML correctly
+              newEl.innerHTML = innerHTML;
+              // Append to your container
+              var weatherResultInner = document.getElementById("weatherResultInner");
+              weatherResultInner.appendChild(newEl);
+
               let timesObj = weatherArray[date];
 
               for (let time in timesObj) {
-
-                let cityCount = 0;
+                  // Each of the time stamps
+                
                 let weatherData = timesObj[time];
 
-                if(cityCount < 1){
                   let innerHTML = `
-                    <div class="weatherCity">${weatherData.city}</div>
+                    <div class="d-flex">
+                    
+                      <div id="time">${weatherData}</div>
+                      <div id="weatherDesc"></div>
+                      <div id="weatherTemp"></div>
+                      <div id="weatherFeels"></div>
+                      <div id="weatherWindDeg"></div>
+                      <div id="weatherWindSpeed"></div>
+                      <div id="weatherClouds"></div>
+                      <div id="weatherSunrise"></div>
+                      <div id="weatherSunset"></div>
+                    
+                    </div>
                   `;
-                  console.log(innerHTML);
-                  // Create the element
-                  let newEl = document.createElement("div");
-                  if(count == 1){ 
-                    newEl.className = "carousel-item active";
-                  }else{
-                    newEl.className = "carousel-item";
-                  }
-                  
-                  // Assign innerHTML correctly
-                  newEl.innerHTML = innerHTML;
-                  // Append to your container
-                  var weatherResultInner = document.getElementById("weatherResultInner");
-                  weatherResultInner.appendChild(newEl);
-                }
-                cityCount++;
+               
               }
-              cityCount = 0;
+              count++;
             }
 
             for (var i = 0; i < weatherArray.length; i++){
@@ -129,19 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
               var weatherResultInner = document.getElementById("weatherResultInner");
               weatherResultInner.appendChild(newEl);
             }
-            /*
-
-                    <div class="d-flex nowrap"
-                  <div id="weatherName"></div>
-                  <div id="weatherDesc"></div>
-                  <div id="weatherTemp"></div>
-                  <div id="weatherFeels"></div>
-                  <div id="weatherWindDeg"></div>
-                  <div id="weatherWindSpeed"></div>
-                  <div id="weatherClouds"></div>
-                  <div id="weatherSunrise"></div>
-                  <div id="weatherSunset"></div>
-                  */
               // DEBUG
               console.log("array: ", weatherArray)
               console.log("data: ", data)
