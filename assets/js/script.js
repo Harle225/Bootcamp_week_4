@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
               // create the inner HTML for the carousel, this puts the location at the top of each carousel items
               let innerHTML = `
-                <div class="weatherCity">${currentCity}</div>
+                <div class="weatherCity text-center"><h1>${currentCity}</h1></div>
                 <div id="${currentCity}-${count}" class="d-flex no-wrap">
                 </div>
               `;
@@ -122,11 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Create a new internal element
                 let newEl = document.createElement("div");
                 // make the hours a flex box
-                newEl.className = "m-3";
+                newEl.className = "m-2";
 
                 // create the inner HTML for the carousel, this puts the location at the top of each carousel items
                 let innerHTML = `
-                  <div id="time">${weatherData.time}</div>
+                  <div id="time" class="text-center"><h3>${weatherData.time}</h3></div>
                   <div id="weather">Weather: ${weatherData.weather}<br />${weatherData.description}</div>
                   <div id="weatherTemp">Temperature: ${weatherData.temp}</div>
                   <div id="weatherFeels">Feels Like: ${weatherData.feels}</div>
