@@ -1,16 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
-    <link href="stylesheet.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-</head>
 
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <!-- Boostrap CSS 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet" crossorigin="anonymous"
+          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr">
+
+    <!-- Custom CSS -->
+    <link href="./assets/css/stylesheet.css" rel="stylesheet">
+</head>
 <body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="Telly_Sun.jpeg" alt="Sun Icon" class="telly-sun">
+                Weather Dashboard
+            </a>
+            <div class="d-flex">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-circle fa-lg"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#apiKeyModal">Save
+                            API Key</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
     <div class="container py-5">
         <div class="text-center mb-5">
             <h1 class="display-5">Contact Us</h1>
@@ -34,7 +66,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="message" class="form-label">Message *</label>
-                        <textarea class="form-control" id="message" rows="5" placeholder="Your message here..." required></textarea>
+                        <textarea class="form-control" id="message" rows="5" placeholder="Your message here..."
+                                  required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary px-4">Send Message</button>
                 </form>
@@ -42,7 +75,8 @@
             <div class="col-md-6">
                 <div class="p-4 bg-light rounded shadow-sm h-100">
                     <h4>Get in Touch</h4>
-                    <p>If you’d like to discuss the weather app, data sources, or potential collaborations, reach out anytime!</p>
+                    <p>If you'd like to discuss the weather app, data sources, or potential collaborations, reach out
+                        anytime!</p>
                     <ul class="list-unstyled">
                         <li><strong>Email:</strong> support@weatherdashboard.com</li>
                         <li><strong>Phone:</strong> +44751905192</li>
@@ -58,8 +92,38 @@
             </div>
         </div>
     </div>
+</main>
 
+<div class="modal fade" id="apiKeyModal" tabindex="-1" aria-labelledby="apiKeyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="apiKeyModalLabel">Save API Key</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="api-key" class="form-label">OpenWeatherMap API Key:</label>
+                    <input type="password" class="form-control" id="api-key" placeholder="Enter your API key here">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="ave-api-key-btn">Save Key</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-JFZ/xIu1zEpj60YvXn+xMZfD8KcbRw0lF9gGZj27lExSqsXGQq1WQFShoOf0Uh4N" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"
+        integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- Bootstrap JS 5.3 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/js/bootstrap.bundle.min.js"
+        integrity="sha512-Tc0i+vRogmX4NN7tuLbQfBxa8JkfUSAxSFVzmU31nVdHyiHElPPy2cWfFacmCJKw0VqovrzKhdd2TSTMdAxp2g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="./assets/js/script.js"></script>
 </body>
+</html>
