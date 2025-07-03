@@ -1,48 +1,91 @@
 // WEATHER APP - BOOTCAMP WK5 GROUP PROJECT
-// VERSION 0.0 
+// VERSION 0.1
 /* Notes:
 - I will contain the javascript files
 */
-function onfetchWeather(){
-    const API_KEY = "f23ee9deb4e1a7450f3157c44ed020e1";
-    // get the name of the city from the form on the main page
-    var cityDef = document.getElementById("city").value;
-    // First, get the latitude and longitude for the city
-    var geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityDef}&limit=1&appid=${API_KEY}`;
+document.addEventListener("DOMContentLoaded", () => {
+  const apiKeyInput = document.getElementById("api-key");
+  // Fetch API Key from local storage if empty
+  if (apiKeyInput.value.trim() === "") {
+    apiKeyInput.value = localStorage.getItem("OpenWeatherApiKey") || "";
+  }
 
-    fetch(geoUrl)
-    .then((response) => response.json())
-    .then((data) => {
-        // Set the Latitude info
-        const lat = data[0].lat;
-        // Set the Longitude info
-        const lon = data[0].lon;
-        // Call getWeather API when the button is clicked
-        const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+  let API_KEY = apiKeyInput.value.trim() || "YOUR_API_KEY_HERE";
 
-        fetch(weatherUrl)
-        .then((response) => response.json())
-        .then((data) => {
-            const cityName = data.name;
-            const cityCountry = data.sys.country;
-            const cityClouds = data.clouds.all;
-            const citySunrise = data.sys.sunrise;
-            const citySunset = data.sys.sunset;
-            const cityWeather = data.weather.main;
-            const cityWeatherDesc = data.weather.description;
-            const cityWindDeg = data.wind.deg;
-            const cityWindSpeed = data.wind.speed;
-            // DEBUG
-            console.log("data: ", data)
-            //console.log("name: ", cityName);
-            //console.log("county: ", cityCountry);
-        })
-        .catch((error) => console.error("Fetch error:", error));
-    })
-    .catch((error) => console.error("Fetch error:", error));
-}
+  apiKeyInput.addEventListener("input", () => {
+    localStorage.setItem("OpenWeatherApiKey", apiKeyInput.value.trim());
+    API_KEY = apiKeyInput.value.trim() || "YOUR_API_KEY_HERE";
+  });
 
-document.getElementById("getWeather").addEventListener("click", onfetchWeather);
+  function onfetchWeather(){
+      // get the name of the city from the form on the main page
+      var cityDef = document.getElementById("city").value;
+      // First, get the latitude and longitude for the city
+      var geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityDef}&limit=1&appid=${API_KEY}`;
+
+      fetch(geoUrl)
+      .then((response) => response.json())
+      .then((data) => {
+          // Set the Latitude info
+          var lat = data[0].lat;
+          // Set the Longitude info
+          var lon = data[0].lon;
+          // Call getWeather API when the button is clicked
+          var weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+
+          fetch(weatherUrl)
+          .then((response) => response.json())
+          .then((data) => {
+              // Create variables from API response
+              var cityName = data.name;
+              var cityCountry = data.sys.country;
+              var cityClouds = data.clouds.all;
+              var cityTemp = data.main.temp;
+              var cityTempFeel = data.main.feels_like;
+              var citySunrise = data.sys.sunrise;
+              var citySunset = data.sys.sunset;
+              var cityWeather = data.weather[0].main;
+              var cityWeatherDesc = data.weather[0].description;
+              var cityWindDeg = data.wind.deg;
+              var cityWindSpeed = data.wind.speed;
+
+              // Change the divs on the front page
+              document.getElementById("weatherCity").innerHTML = `${cityName}, ${cityCountry}`;
+              document.getElementById("weatherName").innerHTML = cityWeather;
+              document.getElementById("weatherDesc").innerHTML = cityWeatherDesc;
+              document.getElementById("weatherTemp").innerHTML = cityTemp;
+              document.getElementById("weatherFeels").innerHTML = cityTempFeel;
+              document.getElementById("weatherWindDeg").innerHTML = cityWindDeg;
+              document.getElementById("weatherWindSpeed").innerHTML = cityWindSpeed;
+              document.getElementById("weatherClouds").innerHTML = cityClouds;
+              document.getElementById("weatherSunrise").innerHTML = citySunrise;
+              document.getElementById("weatherSunset").innerHTML = citySunset;
+              /*
+              RESPONSE STRUCTURE:
+              <div id="weatherCity"></div>
+              <div id="weatherName"></div>
+              <div id="weatherDesc"></div>
+              <div id="weatherTemp"></div>
+              <div id="weatherFeels"></div>
+              <div id="weatherWindDeg"></div>
+              <div id="weatherWindSpeed"></div>
+              <div id="weatherClouds"></div>
+              <div id="weatherSunrise"></div>
+              <div id="weatherSunset"></div>
+              */
+              // DEBUG
+              console.log("data: ", data)
+              //console.log("name: ", cityName);
+              //console.log("county: ", cityCountry);
+          })
+          .catch((error) => console.error("Fetch error:", error));
+      })
+      .catch((error) => console.error("Fetch error:", error));
+  }
+
+  document.getElementById("getWeather").addEventListener("click", onfetchWeather);
+
+});
 
 /* This is reference code
 

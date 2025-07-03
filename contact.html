@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link href="stylesheet.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-5">Contact Us</h1>
+            <p class="lead">Have a question or feedback about our weather dashboard? We'd love to hear from you!</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name *</label>
+                        <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject *</label>
+                        <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message *</label>
+                        <textarea class="form-control" id="message" rows="5" placeholder="Your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary px-4">Send Message</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="p-4 bg-light rounded shadow-sm h-100">
+                    <h4>Get in Touch</h4>
+                    <p>If you’d like to discuss the weather app, data sources, or potential collaborations, reach out anytime!</p>
+                    <ul class="list-unstyled">
+                        <li><strong>Email:</strong> support@weatherdashboard.com</li>
+                        <li><strong>Phone:</strong> +44751905192</li>
+                        <li><strong>Location:</strong> London, United Kingdom</li>
+                    </ul>
+                    <div class="mt-4">
+                        <h6>Follow us</h6>
+                        <a href="#" class="me-3 text-decoration-none"><i class="bi bi-facebook"></i> Facebook</a>
+                        <a href="#" class="me-3 text-decoration-none"><i class="bi bi-twitter"></i> Twitter</a>
+                        <a href="#" class="text-decoration-none"><i class="bi bi-instagram"></i> Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JFZ/xIu1zEpj60YvXn+xMZfD8KcbRw0lF9gGZj27lExSqsXGQq1WQFShoOf0Uh4N" crossorigin="anonymous"></script>
+</body>
