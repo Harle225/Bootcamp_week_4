@@ -1,5 +1,5 @@
 // WEATHER APP - BOOTCAMP WK5 GROUP PROJECT
-// VERSION 0.3
+// VERSION 0.4 - Improved weather display
 /* Notes:
 - I will contain the JavaScript files
 */
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to load API key from local storage
     function loadApiKey() {
-        const storedApiKey = localStorage.getItem('openWeatherApiKey');
+        const storedApiKey = localStorage.getItem('OpenWeatherApiKey');
         if (storedApiKey) {
             apiKeyInput.value = storedApiKey; // Also populate the modal input
         }
@@ -52,14 +52,28 @@ document.addEventListener("DOMContentLoaded", () => {
     function onfetchWeather() {
         // get the name of the city from the form on the main page
         var cityDef = document.getElementById("city").value;
+        const weatherResultInner = document.getElementById("weatherResultInner");
+
+        // Clear previous weather results
+        weatherResultInner.innerHTML = '';
+
         // First, get the latitude and longitude for the city
         var geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityDef}&limit=1&appid=${API_KEY}`;
 
         fetch(geoUrl)
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then((data) => {
+                if (!data || data.length === 0) {
+                    alert("City not found. Please try again.");
+                    return;
+                }
 
-                var weatherArray = [];
+                var weatherByDate = {}; // Renamed for clarity, it holds daily weather arrays
 
                 // Set the Latitude info
                 var lat = data[0].lat;
@@ -69,17 +83,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 var weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
 
                 fetch(weatherUrl)
-                    .then((response) => response.json())
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
                     .then((data) => {
-
                         let dateData = data.list;
                         const currentCity = data.city.name;
+
+                        // Populate weatherByDate object
                         for (var i = 0; i < dateData.length; i++) {
                             let currentRecord = dateData[i];
 
-                            let currentDate = currentRecord.dt;
-                            let date = new Date(currentDate * 1000);
-                            let yy = String(date.getFullYear()).padStart(2, '0');
+                            let date = new Date(currentRecord.dt * 1000);
+                            let yy = String(date.getFullYear());
                             let mm = String(date.getMonth() + 1).padStart(2, '0');
                             let dd = String(date.getDate()).padStart(2, '0');
                             let hh = String(date.getHours()).padStart(2, '0');
@@ -87,121 +106,96 @@ document.addEventListener("DOMContentLoaded", () => {
                             let dateFormatted = `${yy}/${mm}/${dd}`;
                             let timeFormatted = `${hh}:${min}`;
 
-
-                            let currentWeather = currentRecord.weather[0].main;
-                            let currentWeatherDesc = currentRecord.weather[0].description;
-                            let currentTemp = currentRecord.main.temp;
-                            let currentFeel = currentRecord.main.feels_like;
-                            var currentWindDeg = currentRecord.wind.deg;
-                            var currentWindSpeed = currentRecord.wind.speed;
-
                             let weatherInfo = {
                                 time: timeFormatted,
-                                weather: currentWeather,
-                                description: currentWeatherDesc,
-                                temp: currentTemp,
-                                feels: currentFeel,
-                                wind: currentWindDeg,
-                                windSp: currentWindSpeed
-                            }
+                                weather: currentRecord.weather[0].main,
+                                description: currentRecord.weather[0].description,
+                                icon: currentRecord.weather[0].icon, // Add weather icon
+                                temp: currentRecord.main.temp,
+                                feels: currentRecord.main.feels_like,
+                                windDeg: currentRecord.wind.deg,
+                                windSpeed: currentRecord.wind.speed
+                            };
 
-                            if (!weatherArray[dateFormatted]) {
-                                weatherArray[dateFormatted] = []
+                            if (!weatherByDate[dateFormatted]) {
+                                weatherByDate[dateFormatted] = [];
                             }
-                            weatherArray[dateFormatted][timeFormatted] = weatherInfo;
+                            weatherByDate[dateFormatted].push(weatherInfo); // Push into an array for each date
                         }
 
-                        let count = 1; // Set a count so that we know which one is the first element
+                        let carouselItemCount = 0;
 
-                        for (let date in weatherArray) { // Cycle through the weather array
-
-                            // This will create a carousel item for each day
-
-                            // Create the element
-                            let newEl = document.createElement("div");
-
-                            if (count == 1) { // if this is the first carousel item then make sure it is active
-                                newEl.className = "carousel-item active";
-                            } else { // otherwise just set the standard carousel item
-                                newEl.className = "carousel-item";
+                        for (let date in weatherByDate) {
+                            // Create a new carousel item for each day
+                            let carouselItemDiv = document.createElement("div");
+                            carouselItemDiv.classList.add("carousel-item");
+                            if (carouselItemCount === 0) {
+                                carouselItemDiv.classList.add("active");
                             }
 
-                            // create the inner HTML for the carousel, this puts the location at the top of each carousel items
                             let innerHTML = `
-                                <div class="weatherCity text-center"><h1>${currentCity}</h1></div>
-                                <div id="${currentCity}-${count}" class="d-flex no-wrap">
+                                <div class="weatherCity text-center">
+                                    <h1>${currentCity}</h1>
+                                    <h2 class="date-header">${date}</h2>
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-center weather-hourly-container" id="hourly-forecast-${carouselItemCount}">
                                 </div>
                             `;
+                            carouselItemDiv.innerHTML = innerHTML;
+                            weatherResultInner.appendChild(carouselItemDiv);
 
-                            //assign an individual ID for the element - we will be using this to populate each carousel item
-                            //newEl.setAttribute("id", `${currentCity}-${count}` );
+                            const hourlyContainer = document.getElementById(`hourly-forecast-${carouselItemCount}`);
 
-                            // Assign innerHTML to the new element
-                            newEl.innerHTML = innerHTML;
+                            // Sort the hourly data by time
+                            weatherByDate[date].sort((a, b) => {
+                                const [aHour, aMinute] = a.time.split(':').map(Number);
+                                const [bHour, bMinute] = b.time.split(':').map(Number);
+                                if (aHour !== bHour) return aHour - bHour;
+                                return aMinute - bMinute;
+                            });
 
-                            // Select the weatherResultInner Div and append the carousel div to the box
-                            var weatherResultInner = document.getElementById("weatherResultInner");
-                            weatherResultInner.appendChild(newEl);
-
-                            // Set a new variable for the time data array which contains each of the hourly data reports
-                            let timesObj = weatherArray[date];
-
-                            for (let time in timesObj) {
+                            weatherByDate[date].forEach(weatherData => {
                                 // Each of the time stamps
+                                let hourDiv = document.createElement("div");
+                                hourDiv.classList.add("weather-hour-card", "m-2", "p-3", "border", "rounded", "shadow-sm");
 
-                                let weatherData = timesObj[time];
+                                let iconUrl = `https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`;
 
-                                // Create a new internal element
-                                let newEl = document.createElement("div");
-                                // make the hours a flex box
-                                newEl.className = "m-2";
-
-                                // create the inner HTML for the carousel, this puts the location at the top of each carousel items
-                                let innerHTML = `
-                                    <div id="time" class="text-center"><h3>${weatherData.time}</h3></div>
-                                    <div id="weather">Weather: ${weatherData.weather}<br />${weatherData.description}</div>
-                                    <div id="weatherTemp">Temperature: ${weatherData.temp}</div>
-                                    <div id="weatherFeels">Feels Like: ${weatherData.feels}</div>
-                                    <div id="weatherWindDeg">Direction: ${weatherData.wind}</div>
-                                    <div id="weatherWindSpeed">Speed: ${weatherData.windsp}</div>
+                                let hourInnerHTML = `
+                                    <div class="text-center"><h3>${weatherData.time}</h3></div>
+                                    <div class="text-center"><img src="${iconUrl}" alt="${weatherData.description}" class="weather-icon"></div>
+                                    <div>Weather: ${weatherData.weather}<br />${weatherData.description}</div>
+                                    <div>Temperature: ${weatherData.temp}°C</div>
+                                    <div>Feels Like: ${weatherData.feels}°C</div>
+                                    <div>Wind Direction: ${weatherData.windDeg}°</div>
+                                    <div>Wind Speed: ${weatherData.windSpeed} m/s</div>
                                 `;
 
-                                // Assign innerHTML to the new element
-                                newEl.innerHTML = innerHTML;
-
-                                // Select the weatherResultInner Div and append the carousel div to the box
-                                var weatherResultInner = document.getElementById(`${currentCity}-${count}`);
-                                weatherResultInner.appendChild(newEl);
-                            }
-                            count++;
+                                hourDiv.innerHTML = hourInnerHTML;
+                                hourlyContainer.appendChild(hourDiv);
+                            });
+                            carouselItemCount++;
                         }
 
-                        for (var i = 0; i < weatherArray.length; i++) {
-                            // Ensure innerHTML is declared
-                            let innerHTML = `
-                                <div class="weatherCity">${weatherArray.city}</div>
-                            `;
+                        // Initialize the carousel (assuming you have Bootstrap's JS loaded)
+                        const weatherCarousel = new bootstrap.Carousel(document.getElementById('weatherResult'), {
+                            interval: false,
+                            wrap: true
+                        });
 
-                            // Create the element
-                            let newEl = document.createElement("div");
-                            newEl.className = "carousel-item";
-
-                            // Assign innerHTML correctly
-                            newEl.innerHTML = innerHTML;
-
-                            // Append to your container
-                            var weatherResultInner = document.getElementById("weatherResultInner");
-                            weatherResultInner.appendChild(newEl);
-                        }
                         // DEBUG
-                        console.log("array: ", weatherArray)
-                        console.log("data: ", data)
-                        //console.log("name: ", cityName);
-                        //console.log("county: ", cityCountry);
+                        console.log("weatherByDate: ", weatherByDate);
+                        console.log("data: ", data);
                     })
-                    .catch((error) => console.error("Fetch error:", error));
+                    .catch((error) => {
+                        console.error("Weather data fetch error:", error);
+                        alert("Could not retrieve weather data for the specified city. Please check your API key or city name.");
+                    });
             })
-            .catch((error) => console.error("Fetch error:", error));
+            .catch((error) => {
+                console.error("Geolocation fetch error:", error);
+                alert("Could not find the city. Please ensure the city name is correct.");
+            });
     }
 
     document.getElementById("get-weather").addEventListener("click", onfetchWeather);

@@ -92,3 +92,50 @@ textarea:focus, input:focus {
     width: 200px;
     height: 200px;
 }
+
+
+.weatherCity h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.date-header {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.weather-hourly-container {
+    padding: 15px;
+    background-color: #f8f9fa; /* Light background for the hourly container */
+    border-radius: 8px;
+    min-height: 200px; /* Ensure some height even with less data */
+}
+
+.weather-hour-card {
+    background-color: #ffffff;
+    border-color: #dee2e6 !important;
+    text-align: center;
+    min-width: 150px; /* Ensures cards don't get too small */
+    flex-grow: 1; /* Allows cards to grow */
+    max-width: 200px; /* Prevents cards from getting too wide in a row */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.weather-hour-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.weather-icon {
+    width: 60px; /* Adjust size as needed */
+    height: 60px;
+    margin-bottom: 5px;
+}
+
+/* Optional: styling for carousel controls if needed */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
