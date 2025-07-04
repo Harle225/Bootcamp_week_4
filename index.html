@@ -3,131 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Dashboard</title>
-
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>Welcome to Teletubbies Weather App</title>
 
     <!-- Boostrap CSS 5.3 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/css/bootstrap.min.css"
           integrity="sha512-fw7f+TcMjTb7bpbLJZlP8g2Y4XcCyFZW8uy8HsRZsH/SwbMw0plKHFHr99DN3l04VsYNwvzicUX/6qurvIxbxw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-    <!-- Custom CSS -->
-    <link href="./assets/css/stylesheet.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/intro.css">
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="assets/images/Telly_Sun.jpeg" alt="Sun Icon" class="telly-sun">
-                Weather Dashboard
-            </a>
-            <div class="d-flex">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle fa-lg"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#apiKeyModal">Save
-                            API Key</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </nav>
-</header>
-
-<main>
-    <div class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div class="weather-header d-flex align-items-center">
-                <img src="assets/images/Telly_Sun.jpeg" alt="Sun Icon" class="telly-sun">
-                <h1 class="m-0">Weather App</h1>
-            </div>
-            <div>
-                <a href="./contact.html" class="btn btn-outline-primary">Contact Us</a>
-            </div>
-        </div>
-
-        <div class="weather-dashboard mx-auto">
-            <div class="row justify-content-center mb-4 input-section">
-                <div class="col-md-8 d-flex">
-                    <input type="text" id="city" class="form-control me-2"
-                           placeholder="Enter city name..." required
-                           aria-label="City name"/>
-                    <button id="get-weather" class="btn btn-primary">Get Weather</button>
-                </div>
-            </div>
-
-            <div id="weatherResult" class="carousel slide" data-ride="carousel">
-                <div id="weatherResultInner" class="carousel-inner">
-
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
+<div class="intro-container">
+    <div class="flex-shrink-0">
+        <img
+            src="assets/images/intro.jpg"
+            alt="Welcome Image"
+            class="intro-image"
+        >
     </div>
 
-    <div class="d-flex justify-content-center align-items-center gap-4 toolbar">
-        <div class="d-flex flex-column align-items-center">
-            <img src="assets/images/Green_Tubby.png" alt="Green Tubby" class="img-fluid rounded-circle tubby-img">
-            <button class="btn btn-primary mt-2">Tubby Morning!!!</button>
-        </div>
-        <div class="d-flex flex-column align-items-center">
-            <img src="assets/images/Purple_tubby.png" alt="Purple Tubby" class="img-fluid rounded-circle tubby-img">
-            <button class="btn btn-primary mt-2">Tubby Evening!!!</button>
-        </div>
-        <div class="d-flex flex-column align-items-center">
-            <img src="assets/images/Red_tubby.png" alt="Red Tubby" class="img-fluid rounded-circle tubby-img">
-            <button class="btn btn-primary mt-2">Tubby Night!!!</button>
-        </div>
-    </div>
-</main>
-
-<div class="modal fade" id="apiKeyModal" tabindex="-1" aria-labelledby="apiKeyModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="apiKeyModalLabel">Save API Key</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="api-key" class="form-label">OpenWeatherMap API Key:</label>
-                    <input type="password" class="form-control" id="api-key" placeholder="Enter your API key here">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="ave-api-key-btn">Save Key</button>
-            </div>
-        </div>
+    <div class="text-center">
+        <h1 class="display-4 fw-bold text-dark mb-3 lh-sm">
+            Welcome to Our <span class="text-blue-600">Awesome</span> Weather App!
+        </h1>
+        <p class="lead text-secondary mb-4">
+            Discover how easy it is to see weather in your location. So easy that children can use!
+        </p>
+        <a href="weather-app.html">
+            <button class="btn btn-custom">
+                Get Started
+            </button>
+        </a>
     </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"
-        integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- Bootstrap JS 5.3 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/js/bootstrap.bundle.min.js"
         integrity="sha512-Tc0i+vRogmX4NN7tuLbQfBxa8JkfUSAxSFVzmU31nVdHyiHElPPy2cWfFacmCJKw0VqovrzKhdd2TSTMdAxp2g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!-- Custom JS -->
-<script src="./assets/js/script.js"></script>
 </body>
 </html>

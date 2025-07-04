@@ -1,0 +1,113 @@
+/* Custom CSS for animations and font */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Keyframes for fade-in and slide-up animation */
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Keyframes for image scale-in animation */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.intro-container {
+    animation: fadeInSlideUp 1.2s ease-out forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+}
+
+.intro-image {
+    animation: scaleIn 1s ease-out forwards;
+    opacity: 0;
+}
+
+
+/* Custom styles to replicate Tailwind's intro-container and intro-image if not covered by Bootstrap or for specific adjustments */
+body {
+    font-family: 'Inter', sans-serif; /* Apply Inter font globally if desired */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Light grey background similar to default Tailwind setup */
+}
+.intro-container {
+    background-color: #fff;
+    padding: 2.5rem; /* Equivalent to p-10 or p-12 in Tailwind */
+    border-radius: 0.75rem; /* Equivalent to rounded-xl */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Equivalent to shadow-2xl */
+    max-width: 800px; /* Equivalent to max-w-4xl (approx. 896px, adjusting for visual similarity) */
+    width: 100%;
+    margin: 1rem; /* mx-4 */
+    display: flex;
+    flex-direction: column; /* flex-col */
+    align-items: center; /* items-center */
+    justify-content: center; /* justify-center */
+}
+@media (min-width: 768px) { /* md breakpoint */
+    .intro-container {
+        flex-direction: row; /* md:flex-row */
+        padding: 3rem; /* md:p-12 */
+        justify-content: center;
+        align-items: center;
+    }
+    .intro-container > div:first-child { /* Image section */
+        margin-right: 3rem; /* md:space-x-12 (approximated for spacing between image and text) */
+    }
+    .intro-container > div:last-child { /* Text content section */
+        text-align: left !important; /* md:text-left */
+    }
+}
+.intro-image {
+    width: 256px; /* w-64 */
+    height: auto;
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+    object-fit: cover;
+}
+@media (min-width: 768px) { /* md breakpoint */
+    .intro-image {
+        width: 320px; /* md:w-80 */
+    }
+}
+.text-blue-600 { /* Custom color if not directly available in Bootstrap's theme */
+    color: #2563eb;
+}
+.btn-custom {
+    background-color: transparent;
+    color: #2563eb;
+    border: 1px solid #2563eb;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease-in-out;
+}
+.btn-custom:hover {
+    background-color: #2563eb;
+    color: #fff;
+    border-color: transparent;
+}
