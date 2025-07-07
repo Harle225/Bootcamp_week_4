@@ -151,9 +151,34 @@ textarea:focus, input:focus {
     margin-bottom: 5px;
 }
 
-/* Optional: styling for carousel controls if needed */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-color: var(--carousel-control-bg);
     border-radius: 50%;
+}
+
+/* ===== NEW ANIMATIONS FOR THE TUBBY CAROUSEL ===== */
+
+.animated-btn {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px);
+    }
+    60% {
+        transform: translateY(-7px);
+    }
+}
+
+.animated-img {
+    transition: transform 0.5s;
+}
+
+.animated-img:hover {
+    transform: scale(1.1) rotate(5deg);
 }
